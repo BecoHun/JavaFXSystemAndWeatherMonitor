@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="hu.systemmonitor.controller.DashboardController">
+    <VBox alignment="CENTER" spacing="12.0">
+        <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+        </padding>
+
+        <!-- 0. Idő és Naptári Információk & Időjárás -->
+        <VBox spacing="4.0" style="-fx-background-color: #f9ebea; -fx-padding: 10px; -fx-background-radius: 6px;">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #333333; -fx-font-size: 13px;" text="Dátum és Idő"/>
+            <Label fx:id="dateTimeLabel" text="Idő adatok betöltése..."/>
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #333333; -fx-font-size: 13px;" text="🌤️ Időjárás"/>
+            <Label fx:id="weatherLabel" text="Időjárás: Betöltés..."/>
+        </VBox>
+
+        <!-- 1. Operációs Rendszer és Környezet -->
+        <VBox spacing="4.0" style="-fx-background-color: #f2f4f4; -fx-padding: 10px; -fx-background-radius: 6px;">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #333333; -fx-font-size: 13px;"
+                   text="💻 Operációs Rendszer és Környezet"/>
+            <Label fx:id="osInfoLabel" text="OS adatok betöltése..."/>
+        </VBox>
+
+        <!-- 2. Alaplap és Szenzorai -->
+        <VBox spacing="6.0" style="-fx-background-color: #f0f0f0; -fx-padding: 10px; -fx-background-radius: 6px;">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #333333; -fx-font-size: 13px;"
+                   text="🖥️ Alaplap és Szenzorai"/>
+            <Label fx:id="motherboardLabel" text="Alaplap: Mérés alatt..."/>
+            <TableView fx:id="motherboardTableView" prefHeight="110.0">
+                <columns>
+                    <TableColumn fx:id="motherboardNameCol" text="Szenzor / Elem" prefWidth="240.0"/>
+                    <TableColumn fx:id="motherboardValueCol" text="Érték" prefWidth="150.0"/>
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- 3. CPU (Processzor) -->
+        <VBox spacing="4.0" style="-fx-background-color: #eef2f7; -fx-padding: 10px; -fx-background-radius: 6px;">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #333333; -fx-font-size: 13px;"
+                   text="⚙️ Processzor (CPU)"/>
+            <Label fx:id="cpuModelLabel" text="CPU típus: Mérés alatt..."/>
+            <Label fx:id="cpuLabel" text="CPU terhelés: Mérés alatt..."/>
+            <Label fx:id="cpuDetailsLabel" text="CPU adatok: Mérés alatt..."/>
+        </VBox>
+
+        <!-- 4. Memória -->
+        <VBox spacing="4.0" style="-fx-background-color: #f4f0f8; -fx-padding: 10px; -fx-background-radius: 6px;">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #333333; -fx-font-size: 13px;"
+                   text="📊 Memória és SWAP"/>
+            <Label fx:id="memoryLabel" text="Memória használat: Mérés alatt..."/>
+            <Label fx:id="swapLabel" text="SWAP használat: Mérés alatt..."/>
+        </VBox>
+
+        <!-- 5. Videokártya -->
+        <VBox spacing="4.0" style="-fx-background-color: #fafafa; -fx-padding: 10px; -fx-background-radius: 6px;">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #333333; -fx-font-size: 13px;" text="🎮 Videokártya"/>
+            <Label fx:id="gpuModelLabel" text="Modell: Mérés alatt..."/>
+            <TableView fx:id="gpuTableView" prefHeight="110.0">
+                <columns>
+                    <TableColumn fx:id="gpuNameCol" text="Szenzor / Tulajdonság" prefWidth="240.0"/>
+                    <TableColumn fx:id="gpuValueCol" text="Érték" prefWidth="150.0"/>
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- 6. Hálózat és Adatforgalom -->
+        <VBox spacing="4.0" style="-fx-background-color: #e8f8f5; -fx-padding: 10px; -fx-background-radius: 6px;">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #333333; -fx-font-size: 13px;"
+                   text="Hálózat és Adatforgalom"/>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <Label fx:id="publicIpLabel" text="Nyilvános IP: Lekérdezés..."/>
+                <Button onAction="#refreshIp" text="IP Frissítése"/>
+            </HBox>
+            <Label fx:id="netSpeedLabel" text="Sebesség – Bejövő: 0.0 B/s | Kimenő: 0.0 B/s"/>
+            <Label fx:id="netTotalLabel" text="Összes adat – Letöltött: 0 B | Feltöltött: 0 B"/>
+        </VBox>
+
+        <!-- 7. Adattárolók és Partíciók -->
+        <VBox spacing="4.0" style="-fx-background-color: #fcf3cf; -fx-padding: 10px; -fx-background-radius: 6px;">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #333333; -fx-font-size: 13px;"
+                   text="Adattárolók és Partíciók"/>
+            <TableView fx:id="diskTableView" prefHeight="130.0">
+                <columns>
+                    <TableColumn fx:id="diskNameCol" text="Meghajtó" prefWidth="90.0"/>
+                    <TableColumn fx:id="diskMountCol" text="Csatolópont" prefWidth="90.0"/>
+                    <TableColumn fx:id="diskTypeCol" text="Típus" prefWidth="65.0"/>
+                    <TableColumn fx:id="diskPercentCol" text="Használat" prefWidth="70.0"/>
+                    <TableColumn fx:id="diskSpaceCol" text="Használt / Összes" prefWidth="125.0"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </VBox>
+</ScrollPane>
